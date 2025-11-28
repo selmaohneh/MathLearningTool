@@ -1,0 +1,8 @@
+# Python dependencies for Math Learning Tool
+# Note: tkinter is usually included with Python but may need separate installation on Linux
+
+# For audio support (optional but recommended)
+pygame>=2.5.0
+
+# For audio generation (optional - only needed to create custom sounds)
+numpy>=1.24.0
