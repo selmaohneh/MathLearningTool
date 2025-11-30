@@ -125,14 +125,14 @@ class MathLearningApp:
             if level == self.current_level:
                 btn.config(bg="#4CAF50", fg="white", relief="sunken")
             else:
-                btn.config(bg="SystemButtonFace", fg="black", relief="raised")
+                btn.config(bg="#D3D3D3", fg="black", relief="raised")
 
         # Update number buttons
         for num, btn in self.number_buttons.items():
             if num == self.current_number:
                 btn.config(bg="#2196F3", fg="white", relief="sunken")
             else:
-                btn.config(bg="SystemButtonFace", fg="black", relief="raised")
+                btn.config(bg="#D3D3D3", fg="black", relief="raised")
 
     def load_level(self, level):
         """Load the specified level into the main panel"""

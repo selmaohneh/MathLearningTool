@@ -40,8 +40,10 @@ python3 app.py
 1. **Start with Level 1, Number 4:**
    - Click "1" in the Level section
    - Click "4" in the Number section
-   - Help her understand: count the green dots, count the blue dots
+   - Dots are shown horizontally with a red divider line between them
+   - Help her understand: count the green dots (left side), count the blue dots (right side)
    - Type the numbers in the boxes
+   - Note: Larger numbers show a gap after the 5th dot to help visualize groups of five
 
 2. **Practice Pattern:**
    - 5-10 correct answers on number 4
@@ -51,8 +53,8 @@ python3 app.py
 3. **Progress to Level 2:**
    - Once confident with Level 1
    - Same number range (4-10)
-   - Now some dots are "hidden" (shown as dotted circles)
-   - Child figures out how many are hidden
+   - Now some dots are completely hidden (not shown at all)
+   - Child must calculate how many are missing
 
 4. **Advance to Level 3:**
    - Pure mental math

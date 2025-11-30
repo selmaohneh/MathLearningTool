@@ -5,8 +5,8 @@ An interactive desktop application to help children (ages 5-7) learn number deco
 ## Features
 
 - **Three Learning Levels:**
-  - **Level 1**: Visual split with divider - See dots divided by a line, enter both numbers
-  - **Level 2**: Partial dots - Some dots are hidden, calculate the missing portion
+  - **Level 1**: Visual split with divider - See all dots arranged horizontally with a visual divider, enter both numbers. Dots are grouped in fives for easy counting.
+  - **Level 2**: Partial dots - Only some dots are shown (horizontally in groups of five), child must calculate how many are missing
   - **Level 3**: Mental math - Pure calculation with pre-filled first number
 
 - **Interactive UI:**
@@ -243,8 +243,8 @@ python app.py
 
 - [ ] All three levels load correctly
 - [ ] Number selection (4-10) works in each level
-- [ ] Level 1: Divider appears between dots, both inputs work
-- [ ] Level 2: Random dots shown/hidden, accepts both number orders
+- [ ] Level 1: All dots shown horizontally in groups of five with divider line, both inputs work
+- [ ] Level 2: Only visible dots shown horizontally (hidden dots completely invisible), accepts both number orders
 - [ ] Level 3: Left number pre-filled, only right input needed
 - [ ] Correct answers trigger green feedback and sound
 - [ ] Wrong answers trigger red feedback and sound
@@ -290,6 +290,12 @@ For issues or questions:
 4. Check terminal output for error messages
 
 ## Version History
+
+- **v1.1** (2025) - Visual improvements
+  - All dots now displayed horizontally on a single line (improved readability)
+  - Visual grouping: Small gap after 5th dot helps children recognize groups of five
+  - Level 2: Hidden dots now completely invisible (removed grayed-out placeholders to encourage mental calculation)
+  - Fixed cross-platform color compatibility issue
 
 - **v1.0** (2025) - Initial release
   - Three levels of progressive difficulty

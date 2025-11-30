@@ -1,6 +1,8 @@
 """
 Level 2: Partial Dots Display
-Shows only some dots, child must calculate the hidden portion
+Shows only some dots arranged horizontally (grouped in fives with gap after 5th dot).
+Hidden dots are completely invisible - not shown at all.
+Child must calculate the missing portion mentally.
 """
 
 import tkinter as tk
@@ -102,36 +104,30 @@ class Level2(tk.Frame):
         self.feedback_label.pack(pady=10)
 
     def draw_dots(self):
-        """Draw visible dots on canvas"""
+        """Draw only visible dots horizontally with grouping by fives (hidden dots not drawn)"""
         self.canvas.delete("all")
 
-        # Calculate dot layout
-        dots_per_row = min(5, self.number)
-        rows = math.ceil(self.number / dots_per_row)
-
         dot_radius = 20
-        spacing_x = 80
-        spacing_y = 80
+        spacing_x = 50  # Regular spacing between dots
+        gap_after_five = 30  # Extra gap after 5th dot
 
-        # Center the dots
-        total_width = dots_per_row * spacing_x
-        total_height = rows * spacing_y
+        # Calculate total width including the gap
+        total_width = (self.number * spacing_x) + (gap_after_five if self.number > 5 else 0)
         start_x = (600 - total_width) / 2 + spacing_x / 2
-        start_y = (250 - total_height) / 2 + spacing_y / 2
+        y = 125  # Center vertically
 
         # Determine which dots to show
         # Randomly select which dots are visible
         all_indices = list(range(self.number))
         visible_indices = random.sample(all_indices, self.visible_dots)
 
-        # Draw all dot positions, but only fill visible ones
+        # Draw only visible dots horizontally
         for i in range(self.number):
-            row = i // dots_per_row
-            col = i % dots_per_row
-            x = start_x + col * spacing_x
-            y = start_y + row * spacing_y
-
             if i in visible_indices:
+                # Add extra gap after the 5th dot
+                x_offset = gap_after_five if i >= 5 else 0
+                x = start_x + (i * spacing_x) + x_offset
+
                 # Draw visible dot
                 self.canvas.create_oval(
                     x - dot_radius, y - dot_radius,
@@ -139,16 +135,6 @@ class Level2(tk.Frame):
                     fill="#4CAF50",
                     outline="#333",
                     width=2
-                )
-            else:
-                # Draw hidden dot as empty circle (optional - could also draw nothing)
-                self.canvas.create_oval(
-                    x - dot_radius, y - dot_radius,
-                    x + dot_radius, y + dot_radius,
-                    fill="#E0E0E0",
-                    outline="#999",
-                    width=1,
-                    dash=(2, 2)
                 )
 
     def randomize_dots(self):

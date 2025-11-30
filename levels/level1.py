@@ -1,6 +1,8 @@
 """
 Level 1: Visual Split with Divider
-Shows dots with a vertical divider line, child enters both numbers
+Shows dots arranged horizontally with a vertical divider line between them.
+Dots are grouped in fives (gap after 5th dot) for easier visualization.
+Child enters both numbers.
 """
 
 import tkinter as tk
@@ -101,30 +103,24 @@ class Level1(tk.Frame):
         self.feedback_label.pack(pady=10)
 
     def draw_dots(self):
-        """Draw dots on canvas with divider line"""
+        """Draw dots horizontally with divider line and grouping by fives"""
         self.canvas.delete("all")
 
-        # Calculate dot layout
-        dots_per_row = min(5, self.number)
-        rows = math.ceil(self.number / dots_per_row)
-
         dot_radius = 20
-        spacing_x = 80
-        spacing_y = 80
+        spacing_x = 50  # Regular spacing between dots
+        gap_after_five = 30  # Extra gap after 5th dot
 
-        # Center the dots
-        total_width = dots_per_row * spacing_x
-        total_height = rows * spacing_y
+        # Calculate total width including the gap
+        total_width = (self.number * spacing_x) + (gap_after_five if self.number > 5 else 0)
         start_x = (600 - total_width) / 2 + spacing_x / 2
-        start_y = (250 - total_height) / 2 + spacing_y / 2
+        y = 125  # Center vertically
 
-        # Draw dots
+        # Draw dots horizontally
         dot_positions = []
         for i in range(self.number):
-            row = i // dots_per_row
-            col = i % dots_per_row
-            x = start_x + col * spacing_x
-            y = start_y + row * spacing_y
+            # Add extra gap after the 5th dot
+            x_offset = gap_after_five if i >= 5 else 0
+            x = start_x + (i * spacing_x) + x_offset
 
             # Determine if dot is on left or right of divider
             color = "#4CAF50" if i < self.divider_position else "#2196F3"
@@ -140,41 +136,23 @@ class Level1(tk.Frame):
 
         # Draw divider line between dots
         if 0 < self.divider_position < self.number:
-            # Find the divider position
             left_idx = self.divider_position - 1
             right_idx = self.divider_position
 
-            left_row = left_idx // dots_per_row
-            left_col = left_idx % dots_per_row
-            right_row = right_idx // dots_per_row
-            right_col = right_idx % dots_per_row
+            # Calculate positions with gap consideration
+            left_x_offset = gap_after_five if left_idx >= 5 else 0
+            right_x_offset = gap_after_five if right_idx >= 5 else 0
 
-            # Draw vertical divider
-            if left_row == right_row:
-                # Same row - draw vertical line between them
-                left_x = start_x + left_col * spacing_x
-                right_x = start_x + right_col * spacing_x
-                divider_x = (left_x + right_x) / 2
-                y = start_y + left_row * spacing_y
+            left_x = start_x + (left_idx * spacing_x) + left_x_offset
+            right_x = start_x + (right_idx * spacing_x) + right_x_offset
+            divider_x = (left_x + right_x) / 2
 
-                self.canvas.create_line(
-                    divider_x, y - 40,
-                    divider_x, y + 40,
-                    fill="#FF5722",
-                    width=4
-                )
-            else:
-                # Different rows - draw line at end of first row
-                divider_x = start_x + (dots_per_row - 0.5) * spacing_x
-                y1 = start_y + left_row * spacing_y
-                y2 = start_y + right_row * spacing_y
-
-                self.canvas.create_line(
-                    divider_x, y1 - 40,
-                    divider_x, (y1 + y2) / 2,
-                    fill="#FF5722",
-                    width=4
-                )
+            self.canvas.create_line(
+                divider_x, y - 40,
+                divider_x, y + 40,
+                fill="#FF5722",
+                width=4
+            )
 
     def randomize_divider(self):
         """Randomly place the divider between dots"""
