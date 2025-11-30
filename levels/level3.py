@@ -100,9 +100,17 @@ class Level3(tk.Frame):
         self.feedback_label.pack(pady=20)
 
     def generate_exercise(self):
-        """Generate a new exercise with random left value"""
-        # Random value from 0 to number
-        self.left_value = random.randint(0, self.number)
+        """Generate a new exercise with random left value, ensuring it's different from previous"""
+        # Random value from 0 to number, but different from previous
+        if self.number > 0:
+            # If there are multiple possible values, ensure we get a different one
+            new_value = self.left_value
+            while new_value == self.left_value:
+                new_value = random.randint(0, self.number)
+            self.left_value = new_value
+        else:
+            # For number=0, there's only one option
+            self.left_value = 0
 
         # Update left entry
         self.left_entry.config(state="normal")

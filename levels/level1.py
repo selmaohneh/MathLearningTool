@@ -155,13 +155,21 @@ class Level1(tk.Frame):
             )
 
     def randomize_divider(self):
-        """Randomly place the divider between dots"""
+        """Randomly place the divider between dots, ensuring it's different from previous"""
         # Divider can be at positions 1 to number-1 (not at 0 or number)
-        self.divider_position = random.randint(1, self.number - 1)
+        if self.number > 2:
+            # If there are multiple possible positions, ensure we get a different one
+            new_position = self.divider_position
+            while new_position == self.divider_position:
+                new_position = random.randint(1, self.number - 1)
+            self.divider_position = new_position
+        else:
+            # For number=2, there's only one position, so just set it
+            self.divider_position = 1
         self.draw_dots()
 
     def on_key_release(self, event):
-        """Handle keyboard input to move between boxes"""
+        """Handle keyboard input to move between boxes and auto-check"""
         widget = event.widget
         content = widget.get()
 
@@ -175,6 +183,10 @@ class Level1(tk.Frame):
             if len(content) > 2:  # Limit to 2 digits
                 widget.delete(2, tk.END)
             self.right_entry.focus_set()
+
+        # Auto-check when both boxes have values
+        if self.left_entry.get() and self.right_entry.get():
+            self.check_answer()
 
     def check_answer(self, event=None):
         """Check if the answer is correct"""

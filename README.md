@@ -6,7 +6,7 @@ An interactive desktop application to help children (ages 5-7) learn number deco
 
 - **Three Learning Levels:**
   - **Level 1**: Visual split with divider - See all dots arranged horizontally with a visual divider, enter both numbers. Dots are grouped in fives for easy counting.
-  - **Level 2**: Partial dots - Only some dots are shown (horizontally in groups of five), child must calculate how many are missing
+  - **Level 2**: Partial dots - Only leftmost dots are shown (horizontally in groups of five), child must calculate how many are missing
   - **Level 3**: Mental math - Pure calculation with pre-filled first number
 
 - **Interactive UI:**
@@ -118,9 +118,8 @@ python3 app.py
    - Progress to larger numbers (7-10) as skills improve
 
 4. **Answer the questions**:
-   - **Level 1 & 2**: Type the first number, then the second number
-   - **Level 3**: Type only the missing number (first is pre-filled)
-   - Press Enter or wait for automatic checking
+   - **Level 1 & 2**: Type the first number, then the second number (auto-checks when both are entered)
+   - **Level 3**: Type only the missing number (first is pre-filled, auto-checks as you type)
 
 5. **Feedback**:
    - ✓ Green text + high beep = Correct! (auto-advances)
@@ -243,14 +242,15 @@ python app.py
 
 - [ ] All three levels load correctly
 - [ ] Number selection (4-10) works in each level
-- [ ] Level 1: All dots shown horizontally in groups of five with divider line, both inputs work
-- [ ] Level 2: Only visible dots shown horizontally (hidden dots completely invisible), accepts both number orders
-- [ ] Level 3: Left number pre-filled, only right input needed
+- [ ] Level 1: All dots shown horizontally in groups of five with divider line, both inputs work, auto-checks when both entered
+- [ ] Level 2: Only leftmost visible dots shown horizontally (hidden dots completely invisible), accepts both number orders, auto-checks when both entered
+- [ ] Level 3: Left number pre-filled, only right input needed, auto-checks as you type
 - [ ] Correct answers trigger green feedback and sound
 - [ ] Wrong answers trigger red feedback and sound
 - [ ] Edge cases work (0+N, N+0)
 - [ ] Rapid input doesn't cause issues
 - [ ] Switching levels/numbers resets state correctly
+- [ ] Exercises never repeat consecutively (each correct answer shows a different exercise)
 
 ### Customization
 
@@ -290,6 +290,12 @@ For issues or questions:
 4. Check terminal output for error messages
 
 ## Version History
+
+- **v1.2** (2025) - UX improvements
+  - Auto-check feature: Level 1 & 2 now automatically check answers when both numbers are entered (no Enter key needed)
+  - Level 2: Visible dots now always shown left-most for clearer pattern recognition
+  - Anti-repetition: Exercises never repeat consecutively, ensuring varied practice
+  - Improved learning flow with faster feedback
 
 - **v1.1** (2025) - Visual improvements
   - All dots now displayed horizontally on a single line (improved readability)

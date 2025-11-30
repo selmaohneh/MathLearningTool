@@ -42,7 +42,7 @@ python3 app.py
    - Click "4" in the Number section
    - Dots are shown horizontally with a red divider line between them
    - Help her understand: count the green dots (left side), count the blue dots (right side)
-   - Type the numbers in the boxes
+   - Type the numbers in both boxes (answer checks automatically when both are entered)
    - Note: Larger numbers show a gap after the 5th dot to help visualize groups of five
 
 2. **Practice Pattern:**
@@ -53,8 +53,9 @@ python3 app.py
 3. **Progress to Level 2:**
    - Once confident with Level 1
    - Same number range (4-10)
-   - Now some dots are completely hidden (not shown at all)
+   - Now only leftmost dots are shown (some are completely hidden)
    - Child must calculate how many are missing
+   - Answer checks automatically when both numbers are entered
 
 4. **Advance to Level 3:**
    - Pure mental math
@@ -72,10 +73,12 @@ python3 app.py
 
 ## Keyboard Shortcuts
 
-- **Tab:** Move between input boxes (Level 1 & 2)
-- **Enter:** Submit answer
 - **Numbers 0-9:** Enter values
-- **Automatic:** In Level 3, checks as you type
+- **Automatic checking:**
+  - Level 1 & 2: Checks when both numbers are entered
+  - Level 3: Checks as you type
+- **Enter:** Also submits answer (but not required)
+- **Tab:** Move between input boxes (Level 1 & 2)
 
 ## Sound Notes
 

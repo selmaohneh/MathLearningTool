@@ -116,10 +116,8 @@ class Level2(tk.Frame):
         start_x = (600 - total_width) / 2 + spacing_x / 2
         y = 125  # Center vertically
 
-        # Determine which dots to show
-        # Randomly select which dots are visible
-        all_indices = list(range(self.number))
-        visible_indices = random.sample(all_indices, self.visible_dots)
+        # Show only the leftmost visible dots
+        visible_indices = set(range(self.visible_dots))
 
         # Draw only visible dots horizontally
         for i in range(self.number):
@@ -138,11 +136,19 @@ class Level2(tk.Frame):
                 )
 
     def randomize_dots(self):
-        """Randomly decide how many dots are visible vs hidden"""
+        """Randomly decide how many dots are visible vs hidden, ensuring different from previous"""
         # Show between 1 and (number-1) dots
         # This ensures there's always something hidden and something visible
-        if self.number > 1:
-            self.visible_dots = random.randint(1, self.number - 1)
+        if self.number > 2:
+            # If there are multiple possible values, ensure we get a different one
+            new_visible = self.visible_dots
+            while new_visible == self.visible_dots:
+                new_visible = random.randint(1, self.number - 1)
+            self.visible_dots = new_visible
+        elif self.number == 2:
+            # For number=2, toggle between 1 and 1 (only one option, so it will repeat)
+            # Actually for 2, we can only show 1 dot, so we can't avoid repetition
+            self.visible_dots = 1
         else:
             self.visible_dots = 1
 
@@ -150,7 +156,7 @@ class Level2(tk.Frame):
         self.draw_dots()
 
     def on_key_release(self, event):
-        """Handle keyboard input to move between boxes"""
+        """Handle keyboard input to move between boxes and auto-check"""
         widget = event.widget
         content = widget.get()
 
@@ -164,6 +170,10 @@ class Level2(tk.Frame):
             if len(content) > 2:  # Limit to 2 digits
                 widget.delete(2, tk.END)
             self.right_entry.focus_set()
+
+        # Auto-check when both boxes have values
+        if self.left_entry.get() and self.right_entry.get():
+            self.check_answer()
 
     def check_answer(self, event=None):
         """Check if the answer is correct"""
