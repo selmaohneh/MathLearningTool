@@ -6,7 +6,7 @@ An interactive desktop application to help children (ages 5-7) learn number deco
 
 - **Three Learning Levels:**
   - **Level 1**: Visual split with divider - See all dots arranged horizontally with a visual divider, enter both numbers. Dots are grouped in fives for easy counting.
-  - **Level 2**: Partial dots - Only leftmost dots are shown (horizontally in groups of five), child must calculate how many are missing
+  - **Level 2**: Partial dots with pre-filled input - Only leftmost dots are shown (horizontally in groups of five), left input shows the visible count, child only enters the missing number
   - **Level 3**: Mental math - Pure calculation with pre-filled first number
 
 - **Interactive UI:**
@@ -118,7 +118,8 @@ python3 app.py
    - Progress to larger numbers (7-10) as skills improve
 
 4. **Answer the questions**:
-   - **Level 1 & 2**: Type the first number, then the second number (auto-checks when both are entered)
+   - **Level 1**: Type the first number, then the second number (auto-checks when both are entered)
+   - **Level 2**: Type only the missing number (visible count is pre-filled in left box, auto-checks as you type)
    - **Level 3**: Type only the missing number (first is pre-filled, auto-checks as you type)
 
 5. **Feedback**:
@@ -243,7 +244,7 @@ python app.py
 - [ ] All three levels load correctly
 - [ ] Number selection (4-10) works in each level
 - [ ] Level 1: All dots shown horizontally in groups of five with divider line, both inputs work, auto-checks when both entered
-- [ ] Level 2: Only leftmost visible dots shown horizontally (hidden dots completely invisible), accepts both number orders, auto-checks when both entered
+- [ ] Level 2: Only leftmost visible dots shown horizontally (hidden dots completely invisible), left input pre-filled with visible count (read-only), only right input needed, auto-checks as you type
 - [ ] Level 3: Left number pre-filled, only right input needed, auto-checks as you type
 - [ ] Correct answers trigger green feedback and sound
 - [ ] Wrong answers trigger red feedback and sound
@@ -290,6 +291,12 @@ For issues or questions:
 4. Check terminal output for error messages
 
 ## Version History
+
+- **v1.3** (2025) - Level 2 enhancement
+  - Level 2: Left input box now pre-filled with visible dots count (read-only)
+  - Level 2: Player only needs to enter the missing number in right input box
+  - Level 2: Simplified interaction - focus automatically set to right input
+  - Enhanced learning progression with clearer scaffolding between levels
 
 - **v1.2** (2025) - UX improvements
   - Auto-check feature: Level 1 & 2 now automatically check answers when both numbers are entered (no Enter key needed)

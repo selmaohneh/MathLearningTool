@@ -54,14 +54,17 @@ class Level2(tk.Frame):
         input_frame = tk.Frame(self, bg="white")
         input_frame.pack(pady=20)
 
-        # Left input box
+        # Left input box (pre-filled with visible dots count)
         self.left_entry = tk.Entry(
             input_frame,
             width=5,
             font=("Arial", 36),
             justify="center",
             bd=2,
-            relief="solid"
+            relief="solid",
+            state="readonly",
+            readonlybackground="white",
+            fg="#333"
         )
         self.left_entry.pack(side="left", padx=10)
 
@@ -85,14 +88,12 @@ class Level2(tk.Frame):
         )
         self.right_entry.pack(side="left", padx=10)
 
-        # Bind keyboard events
-        self.left_entry.bind("<KeyRelease>", self.on_key_release)
+        # Bind keyboard events (only for right entry)
         self.right_entry.bind("<KeyRelease>", self.on_key_release)
-        self.left_entry.bind("<Return>", self.check_answer)
         self.right_entry.bind("<Return>", self.check_answer)
 
-        # Set focus to left entry
-        self.left_entry.focus_set()
+        # Set focus to right entry since left is pre-filled
+        self.right_entry.focus_set()
 
         # Feedback label (hidden initially)
         self.feedback_label = tk.Label(
@@ -155,8 +156,19 @@ class Level2(tk.Frame):
         self.hidden_dots = self.number - self.visible_dots
         self.draw_dots()
 
+        # Pre-fill the left entry with the visible dots count
+        self.update_left_entry()
+
+    def update_left_entry(self):
+        """Update the left entry with the visible dots count"""
+        # Temporarily enable the entry to update its value
+        self.left_entry.config(state="normal")
+        self.left_entry.delete(0, tk.END)
+        self.left_entry.insert(0, str(self.visible_dots))
+        self.left_entry.config(state="readonly")
+
     def on_key_release(self, event):
-        """Handle keyboard input to move between boxes and auto-check"""
+        """Handle keyboard input and auto-check"""
         widget = event.widget
         content = widget.get()
 
@@ -165,37 +177,27 @@ class Level2(tk.Frame):
             widget.delete(0, tk.END)
             return
 
-        # If left box has content and we're in left box, move to right box
-        if widget == self.left_entry and content:
-            if len(content) > 2:  # Limit to 2 digits
-                widget.delete(2, tk.END)
-            self.right_entry.focus_set()
+        # Limit to 2 digits
+        if len(content) > 2:
+            widget.delete(2, tk.END)
 
-        # Auto-check when both boxes have values
-        if self.left_entry.get() and self.right_entry.get():
+        # Auto-check when right box has a value (left is pre-filled)
+        if self.right_entry.get():
             self.check_answer()
 
     def check_answer(self, event=None):
         """Check if the answer is correct"""
         try:
-            left_val = int(self.left_entry.get()) if self.left_entry.get() else None
             right_val = int(self.right_entry.get()) if self.right_entry.get() else None
 
-            if left_val is None or right_val is None:
+            if right_val is None:
                 return
 
-            # Check if answer is correct
-            # Accept either order: visible + hidden or hidden + visible
-            if left_val + right_val == self.number:
-                if (left_val == self.visible_dots and right_val == self.hidden_dots) or \
-                   (left_val == self.hidden_dots and right_val == self.visible_dots):
-                    self.show_feedback("Correct! ✓", "#4CAF50")
-                    get_audio_manager().play_correct()
-                    self.after(500, self.on_correct)
-                else:
-                    self.show_feedback("Try again", "#FF5722")
-                    get_audio_manager().play_wrong()
-                    self.after(500, self.on_wrong)
+            # Check if the answer is correct (left is pre-filled with visible_dots)
+            if right_val == self.hidden_dots:
+                self.show_feedback("Correct! ✓", "#4CAF50")
+                get_audio_manager().play_correct()
+                self.after(500, self.on_correct)
             else:
                 self.show_feedback("Try again", "#FF5722")
                 get_audio_manager().play_wrong()
@@ -213,17 +215,16 @@ class Level2(tk.Frame):
         self.feedback_label.config(text="")
         self.clear_inputs()
         self.randomize_dots()
-        self.left_entry.focus_set()
+        self.right_entry.focus_set()
 
     def on_wrong(self):
         """Handle wrong answer"""
         self.feedback_label.config(text="")
         self.clear_inputs()
-        self.left_entry.focus_set()
+        self.right_entry.focus_set()
 
     def clear_inputs(self):
-        """Clear both input boxes"""
-        self.left_entry.delete(0, tk.END)
+        """Clear only the right input box (left is pre-filled)"""
         self.right_entry.delete(0, tk.END)
 
     def set_number(self, number):
@@ -232,4 +233,4 @@ class Level2(tk.Frame):
         self.number_label.config(text=str(number))
         self.clear_inputs()
         self.randomize_dots()
-        self.left_entry.focus_set()
+        self.right_entry.focus_set()
